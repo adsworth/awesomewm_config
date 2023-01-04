@@ -187,12 +187,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
-	s.mytextbox = wibox.widget{
-	    markup = "Screen " .. s.index .. ":" .. s.geometry.x .. "x" .. s.geometry.y .. " " .. s.geometry.width .. "x" .. s.geometry.height,
-	    halign = "center",
-	    valign = "center",
-	    widget = wibox.widget.textbox
-	}
     -- Create the wibox
     s.mywibox = awful.wibar {
         position = "top",
@@ -208,7 +202,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
             s.mytasklist, -- Middle widget
             { -- Right widgets
-            	s.mytextbox,
                 layout = wibox.layout.fixed.horizontal,
                 wibox.widget.systray(),
                 mytextclock,
