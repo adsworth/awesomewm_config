@@ -44,7 +44,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/headwind/them
 
 -- This is used later as the default terminal and editor to run.
 terminal = "wezterm"
-editor = "micro"
+editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 file_browser = "thunar"
 
@@ -497,7 +497,8 @@ ruled.client.connect_signal("request::rules", function()
             instance = { "copyq", "pinentry" },
             class    = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
-                "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer"
+                "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer",
+		"zoiper", "Zoiper"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown there might not match defined rules here.
@@ -565,6 +566,24 @@ ruled.client.connect_signal("request::rules", function()
             tag = "terms"
         }
     }
+    ruled.client.append_rule {
+        rule_any       = {
+		{ class = "zoiper", "Zoiper", "skype", "Skype" }
+        },
+        properties = {
+            screen = 2,
+            tag = "calls"
+        }
+    }
+    ruled.client.append_rule {
+        rule_any       = {
+		{ class = "spotify", "Spotify" }
+        },
+        properties = {
+            screen = 2,
+            tag = "music"
+        }
+    }
 end)
 -- }}}
 
@@ -588,7 +607,7 @@ client.connect_signal("request::titlebars", function(c)
             awful.titlebar.widget.floatingbutton(c),
             awful.titlebar.widget.maximizedbutton(c),
             awful.titlebar.widget.stickybutton(c),
-          --  awful.titlebar.widget.ontopbutton(c),
+            awful.titlebar.widget.ontopbutton(c),
             layout  = wibox.layout.fixed.vertical
         },
         { -- Middle
@@ -597,11 +616,11 @@ client.connect_signal("request::titlebars", function(c)
                 halign = "left",
                 widget = awful.titlebar.widget.titlewidget(c)
             },
-            buttons = buttons,
-            layout  = wibox.layout.fixed.vertical,
+	    widget = wibox.container.rotate,
+	    direction = "west",
           },
-	  widget = wibox.container.rotate,
-	  direction = "west",
+          buttons = buttons,
+          layout  = wibox.layout.fixed.vertical,
         },
         layout = wibox.layout.align.vertical
     }
